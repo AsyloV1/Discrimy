@@ -78,6 +78,7 @@ async def on_ready():
         if not AlreadyGotDiscrim:
             FoundNickname = False
             DiscrimName = ""
+            OldDiscrim = client.user.discriminator
             for user in UserList:
                 if FoundNickname == False:
                     if not client.user.name == user.name and client.user.discriminator == user.discriminator:
@@ -93,7 +94,10 @@ async def on_ready():
                 else:
                     print("[INFO] Username/discriminator changed.")
                 await asyncio.sleep(5)
-                print("[INFO] The new discriminator is #" + client.user.discriminator)
+                if not client.user.discriminator == OldDiscrim:
+                    print("[INFO] The new discriminator is #" + client.user.discriminator)
+                else:
+                    print("[INFO] Due to a delay between you and the Discord API, your new discriminator will not be displayed.")
         else:
             print("[INFO] You appear to already have a discriminator you want. Farming has stopped.")
         if ChangeNicknameBack:
