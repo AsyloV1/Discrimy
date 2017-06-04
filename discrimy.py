@@ -50,7 +50,10 @@ async def on_ready():
     UserList = []
     for server in client.servers:
         ServerCount = ServerCount + 1
-        print("[SERVER] " + str(server.name))
+        try:
+            print("[SERVER] " + str(server.name))
+        except:
+            print("[SERVER] Name failed to load!")
         for member in server.members:
             MemberCount = MemberCount + 1
             UserList.append(member)
