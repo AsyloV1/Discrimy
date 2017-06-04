@@ -11,6 +11,9 @@ import asyncio
 if os.path.isfile("temp.py"):
     os.remove("temp.py")
 
+if not os.path.isfile("discrimlist.ini"):
+    raise Exception("[ERROR] Can't find the discriminator list.")
+
 try:
     shutil.copyfile("config.ini", "temp.py")
     from temp import *
@@ -61,6 +64,10 @@ async def on_ready():
         print("[WARNING] There are under 30,000 members in the combined servers you are in. This may cause issues with the discriminator editing process. We recommend joining a few big guilds such as the Discord API server.")
     print("\n------------------\n")
     while True:
+        discrimlist = []
+        with open("discrimlist.ini") as d:
+            discrimlist = d.readlines()
+        discrimlist = [l.strip() for l in discrimlist] 
         AlreadyGotDiscrim = False
         for discrim in discrimlist:
             if discrim == client.user.discriminator:
