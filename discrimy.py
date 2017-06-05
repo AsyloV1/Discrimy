@@ -86,13 +86,6 @@ async def on_ready():
         discrimlist = ndl
         AlreadyGotDiscrim = False
         for discrim in discrimlist:
-            if star in discrim:
-                discrimsplit = list(discrim)
-                charlength = 0
-                for char in discrimsplit:
-                    charlength = charlength + 1
-                    if char == star:
-                        char = client.user.discriminator[char]
             if discrim == client.user.discriminator:
                 AlreadyGotDiscrim = True
         if not AlreadyGotDiscrim:
