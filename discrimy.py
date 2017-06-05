@@ -67,12 +67,32 @@ async def on_ready():
         print("[WARNING] There are under 30,000 members in the combined servers you are in. This may cause issues with the discriminator editing process. We recommend joining a few big guilds such as the Discord API server.")
     print("\n------------------\n")
     while True:
+        star = "*"
         discrimlist = []
         with open("discrimlist.ini") as d:
             discrimlist = d.readlines()
-        discrimlist = [l.strip() for l in discrimlist] 
+        discrimlist = [l.strip() for l in discrimlist]
+        ndl = []
+        for discrim in discrimlist:
+            discrimsplit = list(discrim)
+            nds = []
+            charlength = 0
+            for char in discrimsplit:
+                charlength = charlength + 1
+                if char == star:
+                    char = client.user.discriminator[charlength - 1]
+                nds.append(char)
+            ndl.append(''.join(nds))
+        discrimlist = ndl
         AlreadyGotDiscrim = False
         for discrim in discrimlist:
+            if star in discrim:
+                discrimsplit = list(discrim)
+                charlength = 0
+                for char in discrimsplit:
+                    charlength = charlength + 1
+                    if char == star:
+                        char = client.user.discriminator[char]
             if discrim == client.user.discriminator:
                 AlreadyGotDiscrim = True
         if not AlreadyGotDiscrim:
