@@ -67,7 +67,6 @@ async def on_ready():
         print("[WARNING] There are under 30,000 members in the combined servers you are in. This may cause issues with the discriminator editing process. We recommend joining a few big guilds such as the Discord API server.")
     print("\n------------------\n")
     while True:
-        star = "*"
         discrimlist = []
         with open("discrimlist.ini") as d:
             discrimlist = d.readlines()
@@ -79,7 +78,7 @@ async def on_ready():
             charlength = 0
             for char in discrimsplit:
                 charlength = charlength + 1
-                if char == star:
+                if char == "*":
                     char = client.user.discriminator[charlength - 1]
                 nds.append(char)
             ndl.append(''.join(nds))
