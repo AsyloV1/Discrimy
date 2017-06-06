@@ -80,6 +80,8 @@ async def on_ready():
                 charlength = charlength + 1
                 if char == "*":
                     char = client.user.discriminator[charlength - 1]
+		if char == "%":
+		    char = client.user.discriminator[0]
                 nds.append(char)
             ndl.append(''.join(nds))
         discrimlist = ndl
