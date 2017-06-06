@@ -32,7 +32,7 @@ try:
     import discord
 except:
     install("discord.py")
-    import discord
+    raise Exception("Discord recently installed. Rerun this application.")
 
 print("[INFO] Signing into Discord. This may take a while.")
 logging.basicConfig(level=logging.ERROR)
