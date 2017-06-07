@@ -45,7 +45,7 @@ async def on_ready():
 	try:
 		print('Logged in as ' + OriginalName)
 	except:
-		print('Logged in but cannot display the username but to a encoding error.')
+		print('Logged in but cannot display the username due to a encoding error.')
 	print('ID: ' + client.user.id)
 	print("------------------\n")
 	MemberCount = 0
