@@ -107,16 +107,20 @@ async def on_ready():
                     print("[INFO] Username changed and then changed back. This has changed your discriminator.")
                 else:
                     print("[INFO] Username/discriminator changed.")
-                await asyncio.sleep(3)
+                await asyncio.sleep(DelayTime)
                 if not client.user.discriminator == OldDiscrim:
                     print("[INFO] The new discriminator is #" + client.user.discriminator)
                 else:
                     print("[INFO] Due to a delay between you and the Discord API, your new discriminator will not be displayed.")
         else:
             print("[INFO] You appear to already have a discriminator you want. Farming has stopped.")
+        1hr = 3597
+        30mins = 1hr / 2
+        1hrcorrected = 1hr - DelayTime
+        30minscorrected = 30mins - DelayTime
         if ChangeNicknameBack:
-            await asyncio.sleep(3597)
+            await asyncio.sleep(1hrcorrected)
         else:
-            await asyncio.sleep(1797)
+            await asyncio.sleep(30minscorrected)
 
 client.run(discordtoken, bot=False)
