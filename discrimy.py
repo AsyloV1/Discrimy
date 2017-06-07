@@ -42,7 +42,10 @@ client = discord.Client()
 async def on_ready():
 	OriginalName = client.user.name
 	print("\n------------------")
-	print('Logged in as ' + OriginalName)
+	try:
+		print('Logged in as ' + OriginalName)
+	except:
+		print('Logged in but cannot display the username but to a encoding error.')
 	print('ID: ' + client.user.id)
 	print("------------------\n")
 	MemberCount = 0
