@@ -4,6 +4,8 @@ The purpose of this tool is to farm a account's discriminator until it hits one 
 
 If you are having issues with how GitHub handle text, you can download my pre-compressed version here: https://github.com/Gamerhythm/Discrimy/releases/tag/Discrimy
 
+NOTE: If you downloaded this tool before 17:30 BST on 07/06/2017 and you want to upgrade, your config will be out of date and crash the script on launch. You can manually redownload and edit the config.ini again, or I have made a script to automatically upgrade the config, simply put the Python file in the same folder as your old config.ini and run it. You can download that config upgrader at https://jakesplayground.ga/python/upgradeconfig.py.
+
 DISCLAIMER: This tool could be seen as a violation of the Discord TOS. Please use at your own risk. I have not ran on my main user account.
 
 ![alt text](http://i.imgur.com/skbVrau.png)
