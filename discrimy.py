@@ -1,4 +1,4 @@
-ScriptVer = 3
+ScriptVer = 4
 
 import sys
 
@@ -15,17 +15,23 @@ if os.path.isfile("temp.py"):
 	os.remove("temp.py")
 	
 def AutoUpdateScript():
-	currentverfetch = urllib.request.urlopen("https://jakesplayground.ga/discrimyautoupdate/ver.html")
-	for ver in currentverfetch:
-		CurrentVer = int(ver)
-	if not CurrentVer == ScriptVer:
-		if os.path.isfile("discrimy.py"):
-			os.remove("discrimy.py")
-		print("[NOTE] This script is out of date. Installing update...")
-		urllib.request.urlretrieve("https://jakesplayground.ga/discrimyautoupdate/discrimy.py", "discrimy.py")
-		print("[NOTE] Discrimy autoupdated. Press ENTER and restart the application to enjoy the new update.")
-		input()
-		raise Exception("Script updated and needed to close to allow you to use the new update for this session.")
+	CommunicatedWithServer = False
+	try:
+		currentverfetch = urllib.request.urlopen("https://jakesplayground.ga/discrimyautoupdate/ver.html")
+		CommunicatedWithServer = True
+	except:
+		print("[ERROR] Could not communicate with the autoupdate server.")
+	if CommunicatedWithServer:
+		for ver in currentverfetch:
+			CurrentVer = int(ver)
+		if not CurrentVer == ScriptVer:
+			if os.path.isfile("discrimy.py"):
+				os.remove("discrimy.py")
+			print("[NOTE] This script is out of date. Installing update...")
+			urllib.request.urlretrieve("https://jakesplayground.ga/discrimyautoupdate/discrimy.py", "discrimy.py")
+			print("[NOTE] Discrimy autoupdated. Press ENTER and restart the application to enjoy the new update.")
+			input()
+			raise Exception("Script updated and needed to close to allow you to use the new update for this session.")
 
 if not os.path.isfile("discrimlist.ini"):
 	raise Exception("[ERROR] Can't find the discriminator list.")
