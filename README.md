@@ -1,5 +1,7 @@
 # Discrimy
 
+**THIS TOOL NO LONGER WORKS! IT WAS PATCHED BY DISCORD!**
+
 The purpose of this tool is to farm a account's discriminator until it hits one on a list that you can edit. In order to use this tool, you will need to put your user token and password in config.ini and have Python 3.5 or above and Pip installed. If you want to edit the list that Discrimy will stop farming at, edit discrimlist.ini.
 
 IMPORTANT: Discord are aware of discriminator farmers, and have banned one user for it (I believe it was a different farmer though, I also believe he was bragging about his farmer). We suggest using a alt that is NOT in the Discord API or Discord Developer servers or just generally not being in those servers.
