@@ -1,40 +1,20 @@
-ScriptVer = 4
-
 import sys
 
 if sys.version_info < (3, 4):
 	raise Exception("You must be running Python 3.5 or above!")
 
-import shutil
-import os
 import pip
 import asyncio
 import urllib.request
+import shutil
+import os
+import sqlite3
+
+if not os.name == 'nt':
+	raise Exception("You must be running Windows!")
 
 if os.path.isfile("temp.py"):
 	os.remove("temp.py")
-	
-def AutoUpdateScript():
-	CommunicatedWithServer = False
-	try:
-		currentverfetch = urllib.request.urlopen("https://jakesplayground.ga/discrimyautoupdate/ver.html")
-		CommunicatedWithServer = True
-	except:
-		print("[ERROR] Could not communicate with the autoupdate server.")
-	if CommunicatedWithServer:
-		for ver in currentverfetch:
-			CurrentVer = int(ver)
-		if not CurrentVer == ScriptVer:
-			if os.path.isfile("discrimy.py"):
-				os.remove("discrimy.py")
-			print("[NOTE] This script is out of date. Installing update...")
-			urllib.request.urlretrieve("https://jakesplayground.ga/discrimyautoupdate/discrimy.py", "discrimy.py")
-			print("[NOTE] Discrimy autoupdated. Press ENTER and restart the application to enjoy the new update.")
-			input()
-			raise Exception("Script updated and needed to close to allow you to use the new update for this session.")
-
-if not os.path.isfile("discrimlist.ini"):
-	raise Exception("[ERROR] Can't find the discriminator list.")
 
 try:
 	shutil.copyfile("config.ini", "temp.py")
@@ -42,14 +22,28 @@ try:
 	os.remove("temp.py")
 except:
 	raise Exception("[ERROR] Config load error. Probably missing, broken or in a directory with no write permissions.")
+	
+def GrabToken(IsCanary):
+	if IsCanary:
+		shutil.copy(os.getenv('APPDATA') + '\discordcanary\Local Storage\https_canary.discordapp.com_0.localstorage', 'localstorage.db')
+	else:
+		shutil.copy(os.getenv('APPDATA') + '\discord\Local Storage\https_discordapp.com_0.localstorage', 'localstorage.db')
+	db = sqlite3.connect('localstorage.db')
+	cursor = db.cursor()
+	cursor.execute("SELECT * FROM ItemTable WHERE key = 'token'")
+	token = str(cursor.fetchone()[1]).lstrip("b'").rstrip("'").replace(r'\x00','').lstrip('"').rstrip('"')
+	db.close()
+	os.remove("localstorage.db")
+	return token
 
-if discordtoken == "" and discordpass == "":
+if not os.path.isfile("discrimlist.ini"):
+	raise Exception("[ERROR] Can't find the discriminator list.")
+
+if discordpass == "":
 	raise Exception("[ERROR] Config not edited.")
 
 def install(package):
 	pip.main(['install', package])
-	
-AutoUpdateScript()
 
 import logging
 try:
@@ -128,8 +122,10 @@ async def on_ready():
 			if FoundNickname == False:
 				print("[ERROR] Farming could not continue because another user could not be found with the same discriminator. Try joining some more big servers.")
 			else:
+				await client.login(GrabToken(IsCanary), bot=False)
 				await client.edit_profile(password=discordpass, username=DiscrimName)
 				if ChangeNicknameBack:
+					await client.login(GrabToken(IsCanary), bot=False)
 					await client.edit_profile(password=discordpass, username=OriginalName)
 					print("[INFO] Username changed and then changed back. This has changed your discriminator.")
 				else:
@@ -146,4 +142,4 @@ async def on_ready():
 		else:
 			await asyncio.sleep(1800 - DelayTime)
 
-client.run(discordtoken, bot=False)
+client.run(GrabToken(IsCanary), bot=False)
